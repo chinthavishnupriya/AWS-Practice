@@ -1,0 +1,5 @@
+*.crc
+.sparkStaging/
+spark-warehouse/
+__pycache__/
+*.pyc

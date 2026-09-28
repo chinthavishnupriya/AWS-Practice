@@ -1,0 +1,11 @@
+order_id,order_date,customer,city,category,quantity,price
+1001,2026-09-01,John,Hyderabad,Electronics,2,500
+1002,2026-09-01,Alice,Bangalore,Clothing,3,120
+1003,2026-09-02,Bob,Chennai,Electronics,1,800
+1004,2026-09-02,David,Hyderabad,Furniture,2,450
+1005,2026-09-03,Emma,Pune,Clothing,5,100
+1006,2026-09-03,Frank,Bangalore,Electronics,2,700
+1007,2026-09-04,Grace,Chennai,Furniture,1,900
+1008,2026-09-04,Helen,Hyderabad,Clothing,4,150
+1009,2026-09-05,Ian,Pune,Electronics,3,600
+1010,2026-09-05,Jack,Bangalore,Furniture,2,500

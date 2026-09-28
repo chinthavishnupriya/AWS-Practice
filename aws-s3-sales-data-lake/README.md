@@ -432,3 +432,104 @@ The complete practice contains the dataset, Spark source code, generated output,
 ## Result
 
 The main S3 + Spark sales analysis and the optional city-revenue challenge were completed successfully.
+
+
+## AWS Lambda Serverless Processing
+
+As an alternative to the unavailable Amazon EMR service, AWS Lambda was added to this same S3 sales data lake practice.
+
+The Lambda function processes the same `sales/sales.csv` file stored in the S3 bucket.
+
+### Lambda Architecture
+
+```text
+sales.csv
+   ↓
+Amazon S3
+sales/
+   ↓ S3 ObjectCreated event
+AWS Lambda
+sales-data-lambda
+   ↓
+Revenue by category
+   ↓
+Amazon S3
+output/lambda/category_sales.csv
+```
+
+### Lambda Configuration
+
+Function:
+
+```text
+sales-data-lambda
+```
+
+Region:
+
+```text
+ap-south-1
+```
+
+Runtime:
+
+```text
+Python 3.14
+```
+
+S3 trigger:
+
+- Event: All object create events
+- Prefix: `sales/`
+- Suffix: `.csv`
+
+### Lambda Processing
+
+The Lambda function:
+
+1. Receives the S3 ObjectCreated event.
+2. Reads `sales/sales.csv` from S3.
+3. Calculates `quantity × price` for each row.
+4. Aggregates revenue by category.
+5. Writes the result to `output/lambda/category_sales.csv`.
+
+### Lambda Output
+
+```text
+category,total_revenue
+Clothing,1460
+Electronics,5000
+Furniture,2800
+```
+
+The Lambda output matches the category-level revenue produced by the Spark processing.
+
+### Lambda IAM Permissions
+
+The Lambda execution role includes:
+
+- `AWSLambdaBasicExecutionRole`
+- `s3:GetObject` for the `sales/*` input path
+- `s3:PutObject` for the `output/lambda/*` output path
+
+### Lambda Test
+
+A test event named `s3-sales-test` was used to simulate an S3 ObjectCreated event for:
+
+```text
+sales/sales.csv
+```
+
+The Lambda test executed successfully.
+
+### Lambda Files
+
+The Lambda implementation and generated output are stored inside this same practice:
+
+```text
+aws-s3-sales-data-lake/
+├── lambda_function.py
+└── output/
+    └── lambda/
+        └── category_sales.csv
+```

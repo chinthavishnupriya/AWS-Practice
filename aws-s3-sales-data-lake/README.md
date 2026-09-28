@@ -111,7 +111,7 @@ Output location:
 output/category_sales/
 ```
 
-Spark generated a `part-*.csv` file along with Spark's success/metadata files.
+Spark generated a `part-*.csv` result file and a zero-byte `_SUCCESS` marker. The `_SUCCESS` file is normal Spark output metadata; it does not contain the CSV data.
 
 ## Revenue by City
 
@@ -159,52 +159,146 @@ city_sales.orderBy(
 ).show()
 ```
 
-## Main Commands Used
+# Commands Used
 
-### AWS CLI
+## 1. Install AWS CLI
 
-Check AWS identity:
+Install AWS CLI v2:
+
+```bash
+curl -fsSL https://awscli.amazonaws.com/v2/install.sh | bash
+```
+
+If `unzip` is missing:
+
+```bash
+sudo apt update
+sudo apt install unzip -y
+```
+
+Verify AWS CLI:
+
+```bash
+aws --version
+```
+
+## 2. Configure / Verify AWS Access
+
+Check the active AWS identity:
 
 ```bash
 aws sts get-caller-identity
 ```
 
-Create the S3 bucket:
+## 3. Create the S3 Bucket
 
-```aws
+```bash
 aws s3 mb s3://cloud-fundamentals-sales-vishnupriya-2026 --region ap-south-1
 ```
 
-Upload the dataset:
+List buckets:
+
+```bash
+aws s3 ls
+```
+
+## 4. Upload sales.csv to S3
 
 ```bash
 aws s3 cp sales.csv s3://cloud-fundamentals-sales-vishnupriya-2026/sales/sales.csv
 ```
 
-Verify the upload:
+Verify the uploaded file:
 
 ```bash
 aws s3 ls s3://cloud-fundamentals-sales-vishnupriya-2026/sales/
 ```
 
-### Spark
+## 5. Check S3 Object
 
-Run the analysis:
+```bash
+aws s3 ls s3://cloud-fundamentals-sales-vishnupriya-2026/sales/sales.csv
+```
+
+## 6. Run Spark Locally
+
+Go to the project directory:
+
+```bash
+cd ~/cloud-sales-lab
+```
+
+Run the Spark analysis:
 
 ```bash
 spark-submit sales_analysis.py
 ```
 
-Verify the generated output:
+## 7. Check Spark Output
+
+List generated files:
 
 ```bash
 find output -maxdepth 2 -type f -print
 ```
 
-Read the CSV result:
+Read the category result:
 
 ```bash
 cat output/category_sales/part-*.csv
+```
+
+Expected category output:
+
+```text
+category,total_revenue
+Electronics,5000
+Clothing,1460
+Furniture,2800
+```
+
+## 8. Git Commands Used
+
+Go to the GitHub practice repository:
+
+```bash
+cd ~/AWS-Practice
+```
+
+Check repository status:
+
+```bash
+git status
+```
+
+Stage the practice:
+
+```bash
+git add aws-s3-sales-data-lake
+```
+
+Commit:
+
+```bash
+git commit -m "Add AWS S3 sales data lake and Spark practice"
+```
+
+Push:
+
+```bash
+git push origin main
+```
+
+Verify:
+
+```bash
+git status
+```
+
+Expected final status:
+
+```text
+nothing to commit, working tree clean
 ```
 
 ## EMR Note
@@ -224,21 +318,27 @@ The processing was therefore completed locally with Spark. This still demonstrat
 - **agg() / sum()** — performs aggregation.
 - **orderBy()** — sorts the resulting data.
 - **part-* files** — Spark commonly writes output as partitioned files.
+- **_SUCCESS** — Spark marker indicating a successful output write.
 
 ## Practice Structure
 
 ```
 aws-s3-sales-data-lake/
 ├── README.md
+├── .gitignore
 ├── sales.csv
 ├── sales_analysis.py
 ├── output/
 │   └── category_sales/
+│       ├── _SUCCESS
+│       └── part-*.csv
 ├── screenshots/
 └── notes/
 ```
 
-Screenshots and additional notes will be added to their respective folders.
+## Screenshots
+
+The `screenshots/` folder contains screenshots documenting the AWS CLI, S3, Spark processing, outputs, and final Git push.
 
 ## Result
 

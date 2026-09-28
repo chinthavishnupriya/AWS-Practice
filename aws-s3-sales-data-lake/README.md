@@ -159,9 +159,11 @@ city_sales.orderBy(
 ).show()
 ```
 
-# Commands Used
+## Commands
 
-## 1. Install AWS CLI
+### AWS CLI Commands
+
+#### 1. Install AWS CLI
 
 Install AWS CLI v2:
 
@@ -182,7 +184,7 @@ Verify AWS CLI:
 aws --version
 ```
 
-## 2. Configure / Verify AWS Access
+#### 2. Configure / Verify AWS Access
 
 Check the active AWS identity:
 
@@ -190,7 +192,7 @@ Check the active AWS identity:
 aws sts get-caller-identity
 ```
 
-## 3. Create the S3 Bucket
+#### 3. Create the S3 Bucket
 
 ```bash
 aws s3 mb s3://cloud-fundamentals-sales-vishnupriya-2026 --region ap-south-1
@@ -202,7 +204,7 @@ List buckets:
 aws s3 ls
 ```
 
-## 4. Upload sales.csv to S3
+#### 4. Upload sales.csv to S3
 
 ```bash
 aws s3 cp sales.csv s3://cloud-fundamentals-sales-vishnupriya-2026/sales/sales.csv
@@ -214,13 +216,15 @@ Verify the uploaded file:
 aws s3 ls s3://cloud-fundamentals-sales-vishnupriya-2026/sales/
 ```
 
-## 5. Check S3 Object
+#### 5. Check S3 Object
 
 ```bash
 aws s3 ls s3://cloud-fundamentals-sales-vishnupriya-2026/sales/sales.csv
 ```
 
-## 6. Run Spark Locally
+### Spark Commands
+
+#### 6. Run Spark Locally
 
 Go to the project directory:
 
@@ -234,7 +238,7 @@ Run the Spark analysis:
 spark-submit sales_analysis.py
 ```
 
-## 7. Check Spark Output
+#### 7. Check Spark Output
 
 List generated files:
 
@@ -257,7 +261,9 @@ Clothing,1460
 Furniture,2800
 ```
 
-## 8. Git Commands Used
+### Git Commands
+
+#### 8. Git Commands Used
 
 Go to the GitHub practice repository:
 

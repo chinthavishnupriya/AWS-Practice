@@ -346,6 +346,89 @@ aws-s3-sales-data-lake/
 
 The `screenshots/` folder contains screenshots documenting the AWS CLI, S3, Spark processing, outputs, and final Git push.
 
+
+## Execution Summary
+
+| Step | Status |
+|---|---|
+| AWS CLI installed | ✅ |
+| AWS identity verified | ✅ |
+| S3 bucket created | ✅ |
+| Dataset uploaded to S3 | ✅ |
+| Spark application created | ✅ |
+| Revenue calculated | ✅ |
+| Category aggregation completed | ✅ |
+| City aggregation completed | ✅ |
+| Spark CSV output generated | ✅ |
+| GitHub repository updated | ✅ |
+| Screenshots added | ✅ |
+
+## Prerequisites
+
+Before running this practice, make sure the following are available:
+
+- AWS account with CLI access
+- AWS CLI v2
+- Ubuntu / WSL2
+- Java
+- Apache Spark
+- PySpark
+- Python
+- Git
+- GitHub account
+
+Verify the main tools:
+
+```bash
+aws --version
+java -version
+spark-submit --version
+python3 --version
+git --version
+```
+
+## Troubleshooting Notes
+
+### AWS CLI: unzip missing
+
+If the AWS CLI installation reports that `unzip` is missing:
+
+```bash
+sudo apt update
+sudo apt install unzip -y
+```
+
+### Spark tries localhost:9000
+
+For this local practice, the Spark application uses an explicit local file URI for the dataset and output. This prevents Spark from interpreting the path as an HDFS location.
+
+### `_SUCCESS` is empty
+
+This is expected. Spark creates `_SUCCESS` as a zero-byte success marker. The actual data is stored in the `part-*.csv` file.
+
+### `.crc` files
+
+Spark may create checksum files such as `.crc`. They are excluded from Git using `.gitignore` because they are generated metadata rather than project source files.
+
+## Learning Outcome
+
+This practice provides hands-on experience with:
+
+- Cloud object storage using Amazon S3
+- AWS CLI commands
+- CSV data handling
+- Spark DataFrames
+- Derived columns
+- Aggregation with `groupBy()` and `sum()`
+- Sorting with `orderBy()`
+- Spark CSV output
+- Handling a cloud-service limitation with a local processing fallback
+- Git version control and GitHub documentation
+
+## Final Result
+
+The complete practice contains the dataset, Spark source code, generated output, execution screenshots, and documentation in one GitHub practice folder.
+
 ## Result
 
 The main S3 + Spark sales analysis and the optional city-revenue challenge were completed successfully.
